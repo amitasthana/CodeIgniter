@@ -1,4 +1,9 @@
 <?php
+
+//phpinfo();
+
+
+
 /**
  * CodeIgniter
  *

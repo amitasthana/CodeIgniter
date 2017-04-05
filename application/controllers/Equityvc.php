@@ -4,9 +4,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Equityvc extends CI_Controller {
 
+        public function info()
+        {	
+
+			phpinfo(); 
+                //      echo "-------"; die();
+
+                $this->load->view('uploadpic');
+        }
 
         public function index()
-        {
+        {  
+		//	echo "-------"; die();
+			
                 $this->load->view('uploadpic');
         }
 
