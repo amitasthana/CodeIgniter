@@ -35,15 +35,7 @@ $site_url = "http://".$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME'].'/';
 
 
 
-
-
-
-
-
   </nav>
-
-
-  <div align="center" class="jumbotron full-height bg-home demo-height-2 " data-pages="parallax"> <a href="#bottom"><img src="<?php echo $site_url; ?>images/home-logo.png"  data-src-retina="<?php echo $site_url; ?>images/home-logo.png" class="img-responsive home-logo" alt="" style="margin:20% 0 0 0"></a> </div>
   </section>
 
 
@@ -127,8 +119,3 @@ $site_url = "http://".$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME'].'/';
       })
       </script>
   </body>
-
-
-                                                                                                                                                                     112,0-1       Bot
-                                                                                                                           @
-                                                                                                            1,1           Top
