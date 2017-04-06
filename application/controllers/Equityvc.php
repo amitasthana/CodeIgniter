@@ -4,6 +4,96 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Equityvc extends CI_Controller {
 
+
+function array_to_csv_download($array) {
+    
+    if (count($array) == 0) {
+        return null;
+    }
+    
+    $filename = "data_export_" . date("Y-m-d") . ".csv";
+    // disable caching
+    $now = gmdate("D, d M Y H:i:s");
+    header("Expires: Tue, 03 Jul 2001 06:00:00 GMT");
+    header("Cache-Control: max-age=0, no-cache, must-revalidate, proxy-revalidate");
+    header("Last-Modified: {$now} GMT");
+ 
+    // force download  
+    header("Content-Type: application/force-download");
+    header("Content-Type: application/octet-stream");
+    header("Content-Type: application/download");
+ 
+    // disposition / encoding on response body
+    header("Content-Disposition: attachment;filename={$filename}");
+    header("Content-Transfer-Encoding: binary");
+ 
+    $df = fopen("php://output", 'w');
+    fputcsv($df, array_keys(reset($array)));
+    foreach ($array as $row) {
+        fputcsv($df, $row);
+    }
+    fclose($df);
+    die();    
+}
+
+
+public function exports_data($data){
+          //  $data[] = array('x'=> $x, 'y'=> $y, 'z'=> $z, 'a'=> $a);
+             header("Content-type: application/csv");
+            header("Content-Disposition: attachment; filename=\"test".".csv\"");
+            header("Pragma: no-cache");
+            header("Expires: 0");
+
+            $handle = fopen('php://output', 'w');
+
+            foreach ($data as $data) {
+                fputcsv($handle, $data);
+            }
+                fclose($handle);
+            exit;
+        }	
+	
+ function array_to_csv($array, $download = "")
+    {	
+
+	echo "<pre>"; print_r($array); die(); 
+
+
+        if ($download != "")
+        {    
+            header('Content-Type: application/csv');
+            header('Content-Disposition: attachement; filename="' . $download . '"');
+        }        
+
+        ob_start();
+        $f = fopen($download, 'wb') or show_error("Can't open php://output");
+        $n = 0;        
+        foreach ($array as $line)
+        {
+            $n++;
+            if ( ! fputcsv($f, $line))
+            {
+                show_error("Can't write line $n: $line");
+            }
+        }
+        fclose($f) or show_error("Can't close php://output");
+        $str = ob_get_contents();
+        ob_end_clean();
+
+        if ($download == "")
+        {
+            return $str;    
+        }
+        else
+        {    
+            echo $str;
+        }        
+    }
+
+
+
+
+
         public function info()
         {	
 
@@ -114,6 +204,43 @@ public function saveimagedata($value='')
 }
 
 
+
+public function csv($value='')
+{
+    $this->load->library('mongo_db');
+
+  $data =   $this->mongo_db->get('image_data');
+
+	
+
+	foreach($data as $key => $value){
+		
+	unset($data[$key]['_id']);
+			
+	
+	}
+	
+	//	echo "<pre>"; print_r($data);
+
+
+
+	$this->array_to_csv_download($data , 'image.csv' ); 
+
+
+
+
+
+
+
+
+
+
+
+
+		
+
+
+}
 
 
 
